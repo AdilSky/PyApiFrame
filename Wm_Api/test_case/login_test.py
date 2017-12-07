@@ -14,7 +14,7 @@ class LoginTest(unittest.TestCase):
 
     def tearDown(self):
         print(self.result)
-        pass
+
 
     def test_valid_user_login(self):
         '''有效用户登录'''

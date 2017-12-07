@@ -40,7 +40,10 @@ class TestLog(object):
 
         self.logFileName = 'TestLog-' + str(datetime.now().strftime('%H%M%S')) +'.log'
 
-        self.handler = logging.FileHandler(os.path.join(self.logFile,self.logFileName))
+
+        # class logging.FileHandler(filename, mode='a', encoding=None, delay=False)  构造方法，后面加上 encoding='utf-8'是为了处理
+        # 日志文件中，中文乱发的问题，不加就会出现中文乱码。
+        self.handler = logging.FileHandler(os.path.join(self.logFile,self.logFileName),encoding='utf-8')
 
         self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
