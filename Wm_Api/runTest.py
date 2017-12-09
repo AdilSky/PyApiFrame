@@ -4,8 +4,7 @@
 # SoftWare : PyCharm
 
 import unittest,os,time
-from Wm_Api.common.HTMLTestRunner import HTMLTestRunner
-
+from Wm_Api.common.MyHTMLTestReportCN import HTMLTestRunner
 from Wm_Api.common.EMail import  Email
 
 from Wm_Api import readConfig as RC
