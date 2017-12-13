@@ -1,9 +1,7 @@
-# FileName : login_v1_test.py
+# FileName : comPrice_test.py
 # Author   : Adil
-# DateTime : 2017/12/10 13:26
+# DateTime : 2017/12/12 15:15
 # SoftWare : PyCharm
-
-# 从excel读取数据
 
 import unittest,requests
 
@@ -12,22 +10,26 @@ import json
 
 Ex = Excel.Excel()
 
-class LoginTest(unittest.TestCase):
-    '''定义登录类'''
+class ComPriceTest(unittest.TestCase):
+    '''定义比价类'''
 
     def setUp(self):
-        self.base_url = 'https://www.yiyao.cc'
         self.com_url = 'http://bijia.yiyao.cc'
-
     def tearDown(self):
         pass
-
     def testComPrice(self):
         '''比价神器'''
         try:
             caseList = Ex.readExcel('ApiInfo.xlsx','ComPrice')
-
             for caseDict in caseList:
+                # print("****")
+                # print(caseDict)
+                # # 打印 字典keys转化为 list
+                # print(list(caseDict))
+                # titleList = list(caseDict)
+                # # 打印 字典values 转化为list
+                # print(list(caseDict.values()))
+                # print("****")
                 url = self.com_url + caseDict['ApiLoad']
                 method = caseDict['Method']
                 caseData = caseDict['CaseData']
@@ -54,46 +56,6 @@ class LoginTest(unittest.TestCase):
         except BaseException as msg:
             self.assertIsNone(msg, msg=None)
             print(msg)
-
-
-    def testLogin(self):
-        '''用户登录'''
-        try:
-            caseList = Ex.readExcel('ApiInfo.xlsx','Login')
-
-            for caseDict in caseList:
-                url = self.base_url + caseDict['ApiLoad']
-                method = caseDict['Method']
-                caseData = caseDict['CaseData']
-                caseRun = caseDict['CaseRun']
-                caseName = caseDict['CaseName']
-                expectValue = caseDict['ExpectValue']
-                caseData = eval(caseData)
-
-                if caseRun == 'Y':
-                    if method == 'Post':
-
-                        print(caseName)
-                        expectValue = eval(expectValue)
-                        response = requests.post(url, caseData)
-                        self.result = response.json()
-                        self.assertEqual(self.result['success'],expectValue['success'],msg=None)
-                        self.assertEqual(self.result['error'],expectValue['error'],msg=None)
-                        self.assertEqual(self.result['message'],expectValue['message'],msg=None)
-                        print(self.result)
-
-                    if method == 'Get':
-                        print(caseName)
-                        response = requests.get(url, params=caseData)
-                        self.result = response.text
-                        # self.assertEqual(self.result['success'], expectValue['success'], msg=None)
-                        print(self.result)
-                        pass
-
-        except BaseException as msg:
-            self.assertIsNone(msg, msg=None)
-            print(msg)
-
 
 if __name__ == '__main__':
 
