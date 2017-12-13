@@ -34,19 +34,20 @@ class ComPriceTest(unittest.TestCase):
                 # print(list(caseDict.values()))
                 # print("****")
                 url = self.com_url + caseDict['ApiLoad']
+                caseNum = caseDict['CaseNum']
                 method = caseDict['Method']
                 caseData = caseDict['CaseData']
                 caseRun = caseDict['CaseRun']
                 caseName = caseDict['CaseName']
                 expectValue = caseDict['ExpectValue']
-                caseData = eval(caseData)
+                data = eval(caseData)
                 headers = {'content-type': 'application/json; charset=utf8'}
+                print('用例 ' + caseNum, end=': ')
+                print(caseName)
+                print('数据参数 : ' + caseData)
+                print('搜索商品 : ' + data['keyword'])
                 if caseRun == 'Y':
                     if method == 'Post':
-                        print(caseName)
-                        keyValue=['感冒']
-                        #keyValue.append(caseData(['keyword']))
-                        print(keyValue)
                         expectValue = eval(expectValue)
                         caseData = json.dumps(caseData)
                         response = requests.post(url, caseData,headers=headers)
