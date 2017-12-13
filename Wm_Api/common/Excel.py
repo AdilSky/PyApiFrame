@@ -4,9 +4,9 @@
 # SoftWare : PyCharm
 
 import xlrd
-import os
+import os,datetime
 from openpyxl.reader.excel import load_workbook
-
+from openpyxl import Workbook
 from Wm_Api import readConfig as RC
 
 Rc = RC.ReadConfig()
@@ -19,6 +19,16 @@ class Excel(object):
 
         self.path = Rc.path
         self.excelPath = os.path.join(self.path,'caseData')
+        self.reportPath = os.path.join(self.readExcelPath, 'caseReport')
+        # 创建caseReport 目录
+        if not os.path.exists(self.reportPath):
+            os.mkdir(self.reportPath)
+        self.reportDatePath = os.path.join(self.reportPath, str(datetime.now().strftime('%Y%m%d')))
+        # 创建reportDatePath 目录
+        if not os.path.exists(self.reportDatePath):
+            os.mkdir(self.reportDatePath)
+        self.writeExcelFile = 'ApiReport-' + str(datetime.now().strftime('%H%M%S')) + '.xlsx'
+        self.writeExcelName = os.path.join(self.reportDatePath, self.writeExcelFile)
 
     def readExcel(self,excelName,SheetName):
         '读取excel'
@@ -51,11 +61,24 @@ class Excel(object):
             # print(self.caseDict)
             # 将字典再拼接为列表。
             self.caseList.append(self.caseDict)
+            self.tempList.append(rowValues)
         # print(self.caseList)
         # 返回caseList
+        # self.writeExcel(SheetName, self.titleList, self.tempList)
         return self.caseList
 
 
+    def writeExcel(self,SheetName,titleList,dataList):
+        '''写入excel'''
+        wb = Workbook()
+        # 以SheetName 新建一个sheet页。
+        ws = wb.create_sheet(SheetName)
+        ws.append(titleList)
+        for dataDict in dataList:
+            # titleList = list(dataDict)
+            resultList = list(dataDict.values())
+            ws.append(resultList)
+        wb.save(self.writeExcelName)
 
 
 
