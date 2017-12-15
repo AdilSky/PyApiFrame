@@ -4,7 +4,8 @@
 # SoftWare : PyCharm
 
 import xlrd
-import os,datetime
+import os
+from datetime import datetime
 from openpyxl.reader.excel import load_workbook
 from openpyxl import Workbook
 from Wm_Api import readConfig as RC
@@ -13,12 +14,12 @@ Rc = RC.ReadConfig()
 
 class Excel(object):
     '''定义一个excel类'''
-
+    i = 0
     def __init__(self):
         '初始化基本信息'
 
         self.path = Rc.path
-        self.excelPath = os.path.join(self.path,'caseData')
+        self.readExcelPath = os.path.join(self.path,'caseData')
         self.reportPath = os.path.join(self.readExcelPath, 'caseReport')
         # 创建caseReport 目录
         if not os.path.exists(self.reportPath):
@@ -28,12 +29,32 @@ class Excel(object):
         if not os.path.exists(self.reportDatePath):
             os.mkdir(self.reportDatePath)
         self.writeExcelFile = 'ApiReport-' + str(datetime.now().strftime('%H%M%S')) + '.xlsx'
+
+
+
         self.writeExcelName = os.path.join(self.reportDatePath, self.writeExcelFile)
+        # self.writeExcelName = os.path.join(self.reportPath, 'ApiResultInfo.xlsx')
+        # ApiResultInfo.xlsx
+        # Excel.i +=1
+        print(self.writeExcelName)
+        self.createExcel(self.writeExcelName)
+        print(Excel.i)
+
+
+    def createExcel(self,excelName):
+        '''创建excel'''
+        wb = Workbook()
+        # ws = wb.active()
+        wb.save(excelName)
+
+
+
+
 
     def readExcel(self,excelName,SheetName):
         '读取excel'
 
-        self.excelName = os.path.join(self.excelPath,excelName)
+        self.excelName = os.path.join(self.readExcelPath,excelName)
 
         self.Rb = xlrd.open_workbook(self.excelName)
 
@@ -47,6 +68,7 @@ class Excel(object):
         self.titleList = self.Rs.row_values(0)
         # 定义一个list 存放 所有用例
         self.caseList = []
+        self.tempList = []
         for r in range(1,rows):
             rowValues = self.Rs.row_values(r)
             # print(r)
@@ -70,15 +92,22 @@ class Excel(object):
 
     def writeExcel(self,SheetName,titleList,dataList):
         '''写入excel'''
-        wb = Workbook()
+        wb = load_workbook(self.writeExcelName)
+        sheetIndex = Excel.i
+        # wb = load_workbook(self.writeExcelName)
         # 以SheetName 新建一个sheet页。
-        ws = wb.create_sheet(SheetName)
+        print(sheetIndex)
+        print(SheetName)
+        ws = wb.create_sheet(SheetName,index=sheetIndex)
+        # ws = wb
         ws.append(titleList)
         for dataDict in dataList:
             # titleList = list(dataDict)
             resultList = list(dataDict.values())
             ws.append(resultList)
-        wb.save(self.writeExcelName)
+        Excel.i += 1
+        print(Excel.i)
+        wb.save(filename=self.writeExcelName)
 
 
 

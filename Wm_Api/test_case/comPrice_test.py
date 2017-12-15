@@ -62,10 +62,10 @@ class ComPriceTest(unittest.TestCase):
                         print(self.result, '\n')
                         # 这里要对结果进行一下处理，要不无法存入excel。转为Str类型。
                         caseDict['ResultInfo'] = str(self.result)
-                    else:
-                        print('返回结果: 用例设置无需执行，故没有执行！', '\n')
-                    resultList.append(caseDict)
-                    # print(resultList)
+                else:
+                    print('返回结果: 用例设置无需执行，故没有执行！', '\n')
+                resultList.append(caseDict)
+                # print(resultList)
 
         except BaseException as msg:
             self.assertIsNone(msg, msg=None)
