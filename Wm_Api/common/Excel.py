@@ -14,6 +14,7 @@ Rc = RC.ReadConfig()
 
 class Excel(object):
     '''定义一个excel类'''
+    # 定义类变量
     i = 0
     def __init__(self):
         '初始化基本信息'
@@ -29,16 +30,9 @@ class Excel(object):
         if not os.path.exists(self.reportDatePath):
             os.mkdir(self.reportDatePath)
         self.writeExcelFile = 'ApiReport-' + str(datetime.now().strftime('%H%M%S')) + '.xlsx'
-
-
-
         self.writeExcelName = os.path.join(self.reportDatePath, self.writeExcelFile)
-        # self.writeExcelName = os.path.join(self.reportPath, 'ApiResultInfo.xlsx')
-        # ApiResultInfo.xlsx
-        # Excel.i +=1
-        print(self.writeExcelName)
         self.createExcel(self.writeExcelName)
-        print(Excel.i)
+
 
 
     def createExcel(self,excelName):
@@ -93,23 +87,19 @@ class Excel(object):
     def writeExcel(self,SheetName,titleList,dataList):
         '''写入excel'''
         wb = load_workbook(self.writeExcelName)
+        # 引用类变量 作为index
         sheetIndex = Excel.i
         # wb = load_workbook(self.writeExcelName)
-        # 以SheetName 新建一个sheet页。
-        print(sheetIndex)
-        print(SheetName)
+        # 以SheetName 新建一个sheet页。 sheetIndex 作为序号
         ws = wb.create_sheet(SheetName,index=sheetIndex)
-        # ws = wb
         ws.append(titleList)
         for dataDict in dataList:
             # titleList = list(dataDict)
             resultList = list(dataDict.values())
             ws.append(resultList)
+        # 自增
         Excel.i += 1
-        print(Excel.i)
         wb.save(filename=self.writeExcelName)
-
-
 
 
 

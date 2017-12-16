@@ -17,6 +17,7 @@ class WmApiTest(unittest.TestCase):
     def setUpClass(cls):
         cls.yiyaoURL = 'https://www.yiyao.cc'
         cls.bijiaURL =  'http://bijia.yiyao.cc'
+        # 实例化 Ex
         cls.Ex = Excel.Excel()
 
     @classmethod
@@ -85,7 +86,7 @@ class WmApiTest(unittest.TestCase):
 
     def testLogin(self):
         '''用户登录'''
-        print('比价神器', '\n')
+        print('用户登录', '\n')
         resultList = []
         titleList = []
         caseList = self.Ex.readExcel('ApiInfo.xlsx', 'Login')
