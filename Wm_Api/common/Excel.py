@@ -38,22 +38,13 @@ class Excel(object):
     def createExcel(self,excelName):
         '''创建excel'''
         wb = Workbook()
-        # ws = wb.active()
         wb.save(excelName)
-
-
-
-
 
     def readExcel(self,excelName,SheetName):
         '读取excel'
-
         self.excelName = os.path.join(self.readExcelPath,excelName)
-
         self.Rb = xlrd.open_workbook(self.excelName)
-
         self.Rs = self.Rb.sheet_by_name(SheetName)
-
         # 获取行数
         rows = self.Rs.nrows
         # 定义一个dict存放单条用例
@@ -100,8 +91,6 @@ class Excel(object):
         # 自增
         Excel.i += 1
         wb.save(filename=self.writeExcelName)
-
-
 
 if __name__ == '__main__':
 

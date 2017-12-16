@@ -62,7 +62,9 @@ class WmApiTest(unittest.TestCase):
                     else:
                         caseDict['CaseResult'] = 'Fail'
                     print('返回结果', end=': ')
-                    print(result, '\n')
+                    print(result)
+                    print('执行结果',end=': ')
+                    print(caseDict['CaseResult'], '\n')
                     # 这里要对结果进行一下处理，要不无法存入excel。转为Str类型。
                     caseDict['ResultInfo'] = str(result)
 
@@ -75,7 +77,9 @@ class WmApiTest(unittest.TestCase):
                     else:
                         caseDict['CaseResult'] = 'Fail'
                     print('返回结果', end=': ')
-                    print(result, '\n')
+                    print(result)
+                    print('执行结果', end=': ')
+                    print(caseDict['CaseResult'], '\n')
                     # 这里要对结果进行一下处理，要不无法存入excel。转为Str类型。
                     caseDict['ResultInfo'] = str(result)
             else:
@@ -99,9 +103,6 @@ class WmApiTest(unittest.TestCase):
             data = eval(caseData)              # 使用eval 转换为dict 类型
             caseRun = caseDict['CaseRun']
             caseName = caseDict['CaseName']
-
-            # 设置请求头
-            # headers = {'content-type': 'application/json; charset=utf8'}
             # 设置报告打印内容
             print('用例 ' + caseNum, end=': ')
             print(caseName)
@@ -118,7 +119,9 @@ class WmApiTest(unittest.TestCase):
                     else:
                         caseDict['CaseResult'] = 'Fail'
                     print('返回结果', end=': ')
-                    print(result, '\n')
+                    print(result)
+                    print('执行结果', end=': ')
+                    print(caseDict['CaseResult'], '\n')
                     # 这里要对结果进行一下处理，要不无法存入excel。转为Str类型。
                     caseDict['ResultInfo'] = str(result)
 
@@ -131,7 +134,9 @@ class WmApiTest(unittest.TestCase):
                     else:
                         caseDict['CaseResult'] = 'Fail'
                     print('返回结果', end=': ')
-                    print(result, '\n')
+                    print(result)
+                    print('执行结果', end=': ')
+                    print(caseDict['CaseResult'], '\n')
                     # 这里要对结果进行一下处理，要不无法存入excel。转为Str类型。
                     caseDict['ResultInfo'] = str(result)
             else:
